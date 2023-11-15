@@ -136,7 +136,7 @@ class ViewController: UIViewController {
             slider.value = Float(sineV.p)
             break
         case 5://offsetX0
-            slider.minimumValue = 0
+            slider.minimumValue = -380.0
             slider.maximumValue = 380.0
             slider.value = Float(sineV.offsetX0)
             break
@@ -221,7 +221,7 @@ class ViewController: UIViewController {
             btnArr[i].setTitle(title, for: .normal)
         }
         
-        lab.text = "y = \(sineV.a)sin(\(sineV.w) * (x + \(sineV.offsetX)) + \(sineV.p)) + \(sineV.d)"
+        lab.text = "y = \(sineV.a) * sin(\(sineV.w) * (x + \(sineV.offsetX0)) + \(sineV.p)) + \(sineV.d) \n  \(sineV.startX) <= x <= \(sineV.endX)"
         
         sineV.setNeedsDisplay()
     }
