@@ -24,7 +24,11 @@ class ViewController: UIViewController {
     
     var pBtn = UIButton()
     
+    var offsetX0Btn = UIButton()
+    
     var dBtn = UIButton()
+    
+    var TNumBtn = UIButton()
     
     var index = 0
     
@@ -35,7 +39,7 @@ class ViewController: UIViewController {
     
     var btnArr = [UIButton]()
     let titleArr = ["a:","w:","T:",
-                    "offsetX:","p:","d:"]
+                    "offsetX:","p:","offsetX0:","d:","TNum:"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,7 +63,7 @@ class ViewController: UIViewController {
         lab.numberOfLines = 0
         view.addSubview(lab)
         
-        btnArr = [aBtn,wBtn,TBtn,offsetXBtn,pBtn,dBtn]
+        btnArr = [aBtn,wBtn,TBtn,offsetXBtn,pBtn,offsetX0Btn,dBtn,TNumBtn]
         
        
         for i in 0..<btnArr.count {
@@ -82,7 +86,7 @@ class ViewController: UIViewController {
         }
         
         
-        sineV.frame = CGRectMake((KScreenWidth-380)/2, 320, 380, 400)
+        sineV.frame = CGRectMake((KScreenWidth-380)/2, 380, 380, 400)
         sineV.backgroundColor = .cyan
         view.addSubview(sineV)
           
@@ -93,7 +97,7 @@ class ViewController: UIViewController {
         slider.value = Float(sineV.a)
         view.addSubview(slider)
         slider.addTarget(self, action: #selector(sliderValueChanged(_:)), for: .valueChanged)
-         
+        
     }
 
     @objc func paramsBtnClicked(_ sender:UIButton) {
@@ -127,14 +131,24 @@ class ViewController: UIViewController {
             slider.value = Float(sineV.offsetX)
             break
         case 4://p
-            slider.minimumValue = 0
+            slider.minimumValue = -2*Float.pi
             slider.maximumValue = 2*Float.pi
             slider.value = Float(sineV.p)
             break
-        case 5://d
+        case 5://offsetX0
+            slider.minimumValue = 0
+            slider.maximumValue = 380.0
+            slider.value = Float(sineV.offsetX0)
+            break
+        case 6://d
             slider.minimumValue = -190.0
             slider.maximumValue = 190.0
             slider.value = Float(sineV.d)
+            break
+        case 7://num
+            slider.minimumValue = 0.0
+            slider.maximumValue = 5.0
+            slider.value = Float(sineV.num)
             break
         default:
             break
@@ -144,17 +158,18 @@ class ViewController: UIViewController {
      
     @objc func sliderValueChanged(_ slider:UISlider){
         
-        let value = CGFloat(slider.value).roundedReserve(n: 4)
+        let value = CGFloat(slider.value).roundedReserve(n: 2)
         switch index {
         case 0://a
             sineV.a = value
              
             break
         case 1://w
-            sineV.w = value
+            let w = CGFloat(slider.value).roundedReserve(n: 4)
+            sineV.w = w
             
-            let t = 2*CGFloat.pi/value
-            sineV.T = t.roundedReserve(n: 4)
+            let t = 2*CGFloat.pi/w
+            sineV.T = t.roundedReserve(n: 2)
             
             break
         case 2://T
@@ -172,8 +187,17 @@ class ViewController: UIViewController {
             sineV.p = value
             
             break
-        case 5://d
+        case 5://offsetX0
+            sineV.offsetX0 = value
+            
+            
+            break
+        case 6://d
             sineV.d = value
+            
+            break
+        case 7://num
+            sineV.num = value
             
             break
         default:
@@ -187,10 +211,13 @@ class ViewController: UIViewController {
     
     func updateUI(){
         
-        let valueArr = [sineV.a,sineV.w,sineV.T,sineV.offsetX,sineV.p,sineV.d]
+        let valueArr = [sineV.a,sineV.w,sineV.T,sineV.offsetX,sineV.p,sineV.offsetX0,sineV.d,sineV.num]
         for i in 0..<btnArr.count {
             let value = valueArr[i]
-            let title = String(format: "%@ %.4f", titleArr[i],value)
+            var title = String(format: "%@ %.2f", titleArr[i],value)
+            if i == 1 {
+                title = String(format: "%@ %.4f", titleArr[i],value)
+            }
             btnArr[i].setTitle(title, for: .normal)
         }
         
