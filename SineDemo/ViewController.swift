@@ -110,8 +110,8 @@ class ViewController: UIViewController {
         switch index {
         case 0://a
             
-            slider.minimumValue = -200.0
-            slider.maximumValue = 200.0
+            slider.minimumValue = 0.0
+            slider.maximumValue = 380.0
             slider.value = Float(sineV.a)
             
             break
