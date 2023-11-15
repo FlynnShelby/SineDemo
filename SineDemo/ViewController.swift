@@ -20,11 +20,9 @@ class ViewController: UIViewController {
     
     var TBtn = UIButton()
     
-    var offsetXBtn = UIButton()
-    
     var pBtn = UIButton()
     
-    var offsetX0Btn = UIButton()
+    var offsetXBtn = UIButton()
     
     var dBtn = UIButton()
     
@@ -38,8 +36,10 @@ class ViewController: UIViewController {
     
     
     var btnArr = [UIButton]()
-    let titleArr = ["a:","w:","T:",
-                    "offsetX:","p:","offsetX0:","d:","TNum:"]
+    let titleArr = ["a:","w:",
+                    "T:","p:",
+                    "offsetX:","d:",
+                    "TNum:"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,7 +63,7 @@ class ViewController: UIViewController {
         lab.numberOfLines = 0
         view.addSubview(lab)
         
-        btnArr = [aBtn,wBtn,TBtn,offsetXBtn,pBtn,offsetX0Btn,dBtn,TNumBtn]
+        btnArr = [aBtn,wBtn,TBtn,pBtn,offsetXBtn,dBtn,TNumBtn]
         
        
         for i in 0..<btnArr.count {
@@ -125,27 +125,22 @@ class ViewController: UIViewController {
             slider.maximumValue = 380.0
             slider.value = Float(sineV.T)
             break
-        case 3://offsetX
-            slider.minimumValue = 0
-            slider.maximumValue = 380.0
-            slider.value = Float(sineV.offsetX)
-            break
-        case 4://p
+        case 3://p
             slider.minimumValue = -2*Float.pi
             slider.maximumValue = 2*Float.pi
             slider.value = Float(sineV.p)
             break
-        case 5://offsetX0
+        case 4://offsetX
             slider.minimumValue = -380.0
             slider.maximumValue = 380.0
-            slider.value = Float(sineV.offsetX0)
+            slider.value = Float(sineV.offsetX)
             break
-        case 6://d
+        case 5://d
             slider.minimumValue = -190.0
             slider.maximumValue = 190.0
             slider.value = Float(sineV.d)
             break
-        case 7://num
+        case 6://num
             slider.minimumValue = 0.0
             slider.maximumValue = 5.0
             slider.value = Float(sineV.num)
@@ -179,24 +174,20 @@ class ViewController: UIViewController {
             sineV.w = w.roundedReserve(n: 4)
             
             break
-        case 3://offsetX
-            sineV.offsetX = value
-            
-            break
-        case 4://p
+        case 3://p
             sineV.p = value
             
             break
-        case 5://offsetX0
-            sineV.offsetX0 = value
+        case 4://offsetX
+            sineV.offsetX = value
             
             
             break
-        case 6://d
+        case 5://d
             sineV.d = value
             
             break
-        case 7://num
+        case 6://num
             sineV.num = value
             
             break
@@ -211,7 +202,10 @@ class ViewController: UIViewController {
     
     func updateUI(){
         
-        let valueArr = [sineV.a,sineV.w,sineV.T,sineV.offsetX,sineV.p,sineV.offsetX0,sineV.d,sineV.num]
+        let valueArr = [sineV.a,sineV.w,
+                        sineV.T,sineV.p,
+                        sineV.offsetX,sineV.d,
+                        sineV.num]
         for i in 0..<btnArr.count {
             let value = valueArr[i]
             var title = String(format: "%@ %.2f", titleArr[i],value)
@@ -221,7 +215,7 @@ class ViewController: UIViewController {
             btnArr[i].setTitle(title, for: .normal)
         }
         
-        lab.text = "y = \(sineV.a) * sin(\(sineV.w) * (x + \(sineV.offsetX0)) + \(sineV.p)) + \(sineV.d) \n  \(sineV.startX) <= x <= \(sineV.endX)"
+        lab.text = "y = \(sineV.a) * sin(\(sineV.w) * (x + \(sineV.offsetX)) + \(sineV.p)) + \(sineV.d) \n  \(sineV.startX) <= x <= \(sineV.endX)"
         
         sineV.setNeedsDisplay()
     }
